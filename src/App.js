@@ -11,7 +11,8 @@ function App() {
   const [nextEvo, setNextEvo] = useState([])
   const [level, setLevels] = useState('')
   const [video, setVideo] = useState(1)
-  const [alimento, setAlimento] = useState(0)
+  const [nivel, setNivel] = useState(0)
+  const [cantidadEvo, setCantidadEvo] = useState(0)
 
   const babysI = [401,755,746,828,950,948,1141,1149,955,273,600,1412,292]
   const indiceAleatorio = Math.floor(Math.random() * babysI.length);
@@ -23,12 +24,6 @@ function App() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log('evoluciono')
-
-  }, [digimon]);
-
-
 
   const ejecutar = (digimon) => {
     setMyDigi(digimon);
@@ -38,14 +33,32 @@ function App() {
   }
 
   const evolution = (next) => {
-    setAlimento(alimento + 1)
+    setNivel(nivel + 1)
+   
     
-    if (level === 'Ultimate' || nextEvo.length === 0 || alimento<=3) {
+    if (level === 'Ultimate' || nextEvo.length === 0) {
+
       return
     }
+    if(cantidadEvo === 0 && nivel<4){
+      return
+    }
+    if(cantidadEvo === 1 && nivel<9){
+      return
+    }
+    if(cantidadEvo === 2 && nivel<14){
+      return
+    }
+    if(cantidadEvo === 3 && nivel<19){
+      return
+    }
+    if(cantidadEvo === 4 && nivel<24){
+      return
+    }
+
     abrirVideo()
     const evo = Math.floor(Math.random() * next.length);
-    { console.log(next[evo].id) }
+    
     (async () => {
       setDigimon(
         await getDigimon(next[evo].id)
@@ -54,7 +67,8 @@ function App() {
     (async () => {
       ejecutar(await getDigimon(next[evo].id));
     })();
-    setAlimento(0)
+    setCantidadEvo(cantidadEvo + 1)
+    console.log(cantidadEvo)
   }
 
   const abrirVideo = useCallback(() => {
@@ -67,55 +81,52 @@ function App() {
 
 
   return (
-    <div>
+    <div className=' grid grid-cols-1 m-4 bg-sky-700 m-auto'>
 
-
-
-
-
+      
       {myDigi === 0 &&
 
-        <div>
+        <div >
           <img src="https://wikimon.net/images/thumb/1/14/Digitama_zurumon.jpg/200px-Digitama_zurumon.jpg" alt='Digitama'></img>
           <br></br>
           <button onClick={() => ejecutar(digimon)}>Eclosionar</button>
-
         </div>
-      }
+       }
 
-
-      {myDigi.length !== 0 &&
+      {digimon.length !== 0 &&
         <div>
-
-  
-
           <div className='bg-black'>
 
             {video === 0 &&
-
-              <div className='absolute scale-y-150 max-w-80 h-auto'>
+              <div className='absolute scale-y-150'>
                  <ReactPlayer
                   url={require('./videos/evolution.mp4')}
                   width='100%'
-                  height='22rem'
+                  height='21rem'
                   onEnded={() => cerrarVideo()}
                   playing
                 /> 
               </div>}
 
-
-            <img className='m-auto rounded-xl my-5 p-5 max-w-80 h-auto  ' src={imagen} alt=''></img>
+            <img className='m-auto mt-7 bg-black py-2' src={imagen} alt=''></img>
           </div>
+          
+          <div className='mx-9 my-4 py-3 bg-white border-2 border-black'>
+          <p className='text-3xl  start font-bold text-center px-2 text-teal-300'>{myDigi.name}</p>
+          <p className='text-center px-2 text-lg font-bold text-teal-300'>{level}</p>
+          <p className='text-center px-2 text-2xl font-bold text-teal-300'>Level: {nivel}</p>
+          {nivel !== 30 &&  <button className='border border-teal-300 bg-sky-700 py-5 my-2 rounded-xl w-3/5 m-4 text-2xl font-bold text-teal-300   ' onClick={() => evolution(nextEvo)}>Level Up</button> }
+          </div>
+        
 
-          <p>{myDigi.name}</p><p>{level}</p>
-          {console.log(nextEvo)}
-          { level !== 'Ultimate' && 
-               <button onClick={() => evolution(nextEvo)}>Alimentar</button>
-          }
+
+   
+      
+              
+          
      
         </div>
       }
-
 
     </div>
 
