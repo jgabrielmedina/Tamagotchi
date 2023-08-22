@@ -94,13 +94,13 @@ function App() {
             {video === 0 &&
 
               <div className='absolute scale-y-150 max-w-80 h-auto'>
-                <ReactPlayer
-                  url={require('./videos/Untitled.mp4')}
+                 <ReactPlayer
+                  url={require('./videos/evolution.mp4')}
                   width='100%'
                   height='22rem'
                   onEnded={() => cerrarVideo()}
                   playing
-                />
+                /> 
               </div>}
 
 
