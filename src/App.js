@@ -99,7 +99,8 @@ function App() {
 
             {video === 0 &&
               <div className='absolute scale-y-150'>
-                 <ReactPlayer
+                 <ReactPlayer 
+                  playsinline 
                   url={require('./videos/evolution.mp4')}
                   width='100%'
                   height='21rem'
