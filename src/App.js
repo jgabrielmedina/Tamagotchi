@@ -85,21 +85,23 @@ function App() {
     <div className=' grid grid-cols-1 m-4 m-auto md:w-[40rem] mt-12 relative'>
 
       {digimon.length !== 0 &&
-        <div className='border border-red-500 m-auto md:w-full'>
-          <div className=' border absolute z-50 grid grid-cols-2 w-full  top-36 items-center'>
-            <p className=' border text-white  text-7xl h-full grid grid-cols-1 content-center text-start pl-10 neon'>{nivel}</p>
-            <div className='border text-white text-xl h-full grid grid-cols-1 grid-rows-6 content-center'>
+        <div className='m-auto md:w-full'>
+          <div className='hidden md:block'>
+          <div className='absolute z-50 grid grid-cols-2 w-full  top-36 items-center'>
+            <p className='text-white  text-7xl h-full grid grid-cols-1 content-center text-start pl-11 pt-2 neon'>{nivel}</p>
+            <div className='text-white text-xl h-full grid grid-cols-1 grid-rows-6 content-center'>
               {/* <p className='text-right text-3xl row-start-2 pr-3 pt-1' >Level Up</p> */}
               {nivel !== 30 && 
-              <button className='border text-right text-3xl row-start-2 pr-3 pt-1 neon hover:text-4xl hover:pr-1 duration-150 ' onClick={() => evolution(nextEvo)}>Level Up</button>
+              <button className=' text-right text-3xl row-start-2 pr-5 pt-1 neon hover:font-bold' onClick={() => evolution(nextEvo)}>Level Up</button>
               }
-              <button className='border text-right text-3xl row-start-5 pr-7 pt-2 neon'>Detalle</button>
+              <button className='  text-right text-3xl row-start-5 pr-9 pt-[12px] neon hover:font-bold'>Detalle</button>
             </div>
           </div>
-
+          </div>
+          
           {video === 0 &&
-              <div className='absolute top-[8.05rem] left-[222px] m-auto w-[249.5px] scale-y-[1.77] items-center z-50'>
-
+             
+              <div className='hidden md:block md:absolute top-[8rem] left-[222px] m-auto w-[249.5px] scale-y-[1.77] items-center z-50'>
                 <ReactPlayer
                   playsinline attr
                   url={require('./videos/evolution5.mp4')}
@@ -108,9 +110,9 @@ function App() {
                   onEnded={() => cerrarVideo()}  
                   playing
                 />
-
               </div>
             }
+
           <div className='my-48 py-[3px] pl-1 brightness-100 contrast-75'>
             <img className=' m-auto w-[203px] rounded-2xl border-2 border-neutral-900 ' src={imagen} alt=''></img>
           </div>
@@ -122,9 +124,22 @@ function App() {
             {nivel !== 30 && <button className='border border-teal-300 bg-sky-700 py-5 my-2 rounded-xl w-3/5 m-4 text-2xl font-bold text-teal-300   ' onClick={() => evolution(nextEvo)}>Level Up</button>}
           </div>  */}
 
+          <div className='md:hidden bg-blue-600 rounded-xl h-20'>
+          <p className=' neon h-1/2 pt-1 text-3xl'>{nivel}</p>
+            <div className=' neon flex justify-evenly mt-2'>
+              {/* <p className='text-right text-3xl row-start-2 pr-3 pt-1' >Level Up</p> */}
+              {nivel !== 30 && 
+              <button className='w-1/2 border-r' onClick={() => evolution(nextEvo)}>Level Up</button>
+              }
+              <button className='w-1/2'>Detalle</button>
+            </div>
+            {myDigi===0 &&   <button className='neon bg-blue-500 w-36 h-12 rounded-xl text-2xl   ' onClick={() => ejecutar(digimon)}>Eclosionar</button> }
+          
+          </div>
+
 {myDigi === 0 &&
 
-<div>
+<div className='hidden md:block'>
   <div className='my-48 py-[3px] pl-1 brightness-100 contrast-75'>
   <img className='m-auto w-[203px] rounded-2xl border-2 border-neutral-900 absolute bottom-[0.08rem] left-[13.7rem]' src="https://wikimon.net/images/thumb/1/14/Digitama_zurumon.jpg/200px-Digitama_zurumon.jpg" alt='Digitama'></img>
   </div>
