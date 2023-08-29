@@ -3,8 +3,11 @@ import './App.css';
 import React from 'react';
 import { getDigimon } from './services/getDigimon';
 import ReactPlayer from 'react-player';
+import Modal from './components/Modal';
+import { useModal } from './useModal';
 
 function App() {
+  const [isOpenModal, openModal, closeModal] = useModal(false);
   const [digimon, setDigimon] = useState([])
   const [myDigi, setMyDigi] = useState(0)
   const [imagen, setImagen] = useState([])
@@ -30,6 +33,7 @@ function App() {
     setImagen(digimon.images[0].href)
     setNextEvo(digimon.nextEvolutions)
     setLevels(digimon.levels[0].level)
+    console.log(digimon)
   }
 
   const evolution = (next) => {
@@ -95,7 +99,7 @@ function App() {
               {nivel !== 30 && 
               <button className=' text-right text-3xl row-start-2 pr-5 pt-1 neon hover:font-bold' onClick={() => evolution(nextEvo)}>Level Up</button>
               }
-              <button className='  text-right text-3xl row-start-5 pr-9 pt-[12px] neon hover:font-bold'>Detalle</button>
+              <button className='  text-right text-3xl row-start-5 pr-9 pt-[12px] neon hover:font-bold' onClick={openModal}>Detalle</button>
             </div>
           </div>
           </div>
@@ -131,7 +135,7 @@ function App() {
               {nivel !== 30 && 
               <button className='w-1/2 border-r' onClick={() => evolution(nextEvo)}>Level Up</button>
               }
-              <button className='w-1/2'>Detalle</button>
+              <button className='w-1/2' onClick={openModal}>Detalle</button>
             </div>
             {myDigi===0 &&   <button className='neon bg-blue-500 w-36 h-12 rounded-xl text-2xl mt-4' onClick={() => ejecutar(digimon)}>Eclosionar</button> }
           
@@ -148,6 +152,17 @@ function App() {
 </div>
 }
 
+        <Modal isOpen={isOpenModal} closeModal={closeModal}>
+
+        <div className='py-4'>
+          <img className=' w-[27rem] rounded-2xl' src={imagen}></img>
+         <hr className='w-[70%] m-auto my-3'></hr>
+          
+          <p className={`${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'} font-bold text-2xl`}>{myDigi.name}</p>
+          <p className={`text-lg ${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'}`}>{level}</p>
+        </div>
+
+        </Modal>
 
 
 
