@@ -5,6 +5,8 @@ import { getDigimon } from './services/getDigimon';
 import ReactPlayer from 'react-player';
 import Modal from './components/Modal';
 import { useModal } from './useModal';
+import {IoHeartHalf, IoHeartOutline, IoHeartSharp} from 'react-icons/io5';
+import {FaAngry, FaGrinBeam,FaMeh} from 'react-icons/fa';
 
 function App() {
   const [isOpenModal, openModal, closeModal] = useModal(false);
@@ -14,6 +16,8 @@ function App() {
   const [nextEvo, setNextEvo] = useState([])
   const [level, setLevels] = useState('')
   const [video, setVideo] = useState(1)
+  const [cara, setCara] = useState(0)
+  const [heart, setHeart] = useState(0)
   const [nivel, setNivel] = useState(0)
   const [cantidadEvo, setCantidadEvo] = useState(0)
 
@@ -38,8 +42,7 @@ function App() {
 
   const evolution = (next) => {
     setNivel(nivel + 1)
-
-    if(level === 'Ultimate'){
+    if(cara!==2 && heart!==2 || level === 'Ultimate'){
       return
     }
     if (cantidadEvo === 0 && nivel < 4) {
@@ -73,16 +76,49 @@ function App() {
       ejecutar(await getDigimon(next[evo].id));
     })();
     setCantidadEvo(cantidadEvo + 1)
-
+    setCara(1)
+    setHeart(0)
   }
 
   const abrirVideo = useCallback(() => {
     setVideo(0)
   }, [])
   const cerrarVideo = useCallback(() => {
+    openModal()
     setVideo(1)
   }, [])
 
+  const face = () => {
+    if(cara==2){return}
+    setCara(cara + 1)
+  }
+  const heartFunction = () => {
+    if(heart==2){return}
+    setHeart(heart + 1)
+  }
+
+  let icono = null 
+  
+  
+  if(cara==0){
+    icono = <FaAngry className='text-red-500'/>
+  }
+  else if (cara == 1) {
+    icono = <FaMeh className='text-yellow-500'/>
+  } else if (cara ==2){
+    icono = <FaGrinBeam className='text-green-600'/>
+  }
+
+  let iconoHeart = null 
+
+  if(heart==0){
+    iconoHeart = <IoHeartOutline className='text-red-500'/>
+  }
+  else if (heart == 1) {
+    iconoHeart  = <IoHeartHalf className='text-red-500'/>
+  } else if (heart ==2){
+    iconoHeart  = <IoHeartSharp className='text-red-600'/>
+  }
 
 
   return (
@@ -154,12 +190,32 @@ function App() {
 
         <Modal isOpen={isOpenModal} closeModal={closeModal}>
 
-        <div className='py-4'>
-          <img className=' w-[27rem] rounded-2xl' src={imagen}></img>
-         <hr className='w-[70%] m-auto my-3'></hr>
-          
-          <p className={`${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'} font-bold text-2xl`}>{myDigi.name}</p>
-          <p className={`text-lg ${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'}`}>{level}</p>
+        <div className='py-4 flex flex-row gap-8'>
+          <img className='border w-[27rem] rounded-2xl' src={imagen}></img>
+
+
+
+
+          <div className='border basis-1/2 py-6'>
+          <p className={`
+          ${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'} 
+          ${level === 'Perfect' ? 'text-pink-500' : 'text-blue-600'} 
+          font-bold text-2xl border`}>{myDigi.name} &#40;{level}&#41;</p>
+          <div className='flex'>
+          {iconoHeart} 
+          <p className='text-2xl text-red-500'>
+          {icono}
+          </p>
+         
+
+          <button className='font-bold text-md text-blue-600 px-2' onClick={()=>{face()}}>Play</button>
+          <button className='font-bold text-md text-blue-600 px-2' onClick={()=>{heartFunction()}}>Curar</button>
+          </div>
+          </div>
+
+
+
+
         </div>
 
         </Modal>
