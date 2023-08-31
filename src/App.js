@@ -199,7 +199,7 @@ function App() {
         <Modal isOpen={isOpenModal} closeModal={closeModal}>
 
         <div className='py-4 md:flex md:flex-row gap-8'>
-          <img className='border-r w-[27rem] ' src={imagen}></img>
+          <img className='border-r w-[17rem] md:w-[27rem] ' src={imagen}></img>
 
 
 
@@ -213,7 +213,7 @@ function App() {
           ${level === 'Ultimate' ? 'text-orange-400' : 'text-blue-600'} 
           ${level === 'Perfect' ? 'text-pink-500' : 'text-blue-600'} 
           text-lg`}>&#40;{level}&#41;</p>
-          <div className='flex flex-col  my-20 '>
+          <div className='flex flex-col my-6  md:my-20 '>
          
          <div className='flex  justify-center gap-2'>
           <p className=' text-2xl text-red-500'>
